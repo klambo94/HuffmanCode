@@ -40,7 +40,7 @@ public class StringOfBits {
 	 * @see StringOfBits(final CharSequence)
 	 * @return String
 	 */
-	public String getBinaryString() {
+	public String getBitString() {
 		return binaryString;
 	}
 
@@ -95,7 +95,7 @@ public class StringOfBits {
 	 * contains other than "0" and "1" the
 	 * behavior of this method is undefined.
 	 * @param str CharSequence to append
-	 * @return
+	 * @return The appended StringOfBits
 	 */
 	public StringOfBits append(CharSequence str) {
 		return new StringOfBits();
