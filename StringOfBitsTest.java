@@ -1,9 +1,9 @@
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 
 /**
@@ -11,14 +11,18 @@ import static org.junit.Assert.assertFalse;
  * @author Kendra Lamb
  */
 public class StringOfBitsTest {
-    private CharSequence HELLO_WORLD = "hello world";
-    private String HELLO_WORLD_BIT_STRING = "10010000110010101101100"
-                                            + "0110110001101111001"
-                                            + "0000001010111011011"
-                                            + "1101110010011011000"
-                                            + "110010000100001";
+    private final CharSequence HELLO_WORLD = "hello world";
+    private final String HELLO_WORLD_BIT_STRING =
+            "01101000011001010110110001101100011011110010000001110111011011"
+                                                + "11011100100110110001100100";
 
-    private int helloWorldLength = HELLO_WORLD_BIT_STRING.length();
+    private final int HELLO_WORLD_BIT_STRING_LENGTH =
+            HELLO_WORLD_BIT_STRING.length();
+
+    private final CharSequence HELLO = "hello";
+    private final String HELLO_BIT_STRING =
+            "0110100001100101011011000110110001101111";
+    private final int HELLO_BIT_STRING_LENGTH = HELLO_BIT_STRING.length();
 
     private StringOfBits emptyStringOfBits() {
         return new StringOfBits();
@@ -35,26 +39,26 @@ public class StringOfBitsTest {
     @Test
     public void bitStringTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertNotEquals(0, sb.length());
         assertEquals(HELLO_WORLD_BIT_STRING, sb.getBitString());
-        assertEquals(helloWorldLength,
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH,
                 sb.getBitString().length());
     }
 
     @Test
     public void cloneConstructorTest() {
         StringOfBits clone = new StringOfBits(helloWorldStringOfBits());
-        assertEquals(clone, helloWorldStringOfBits());
+        assertSame(clone, helloWorldStringOfBits());
     }
 
     @Test
     public void emptyStringOfBitsAppendCharTest() {
-        StringOfBits sb = helloWorldStringOfBits();
+        StringOfBits sb = emptyStringOfBits();
         char c =  '1';
         assertEquals(0, sb.length());
         sb.append(c);
         assertEquals(1, sb.length());
         assertEquals(String.valueOf(c), sb.getBitString());
+        System.out.println(sb.getBitString());
     }
 
     @Test
@@ -62,7 +66,7 @@ public class StringOfBitsTest {
         StringOfBits sb = helloWorldStringOfBits();
         char c = '1';
         sb.append(c);
-        assertEquals(helloWorldLength  + 1, sb.getBitString().length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 1, sb.getBitString().length());
         assertEquals(HELLO_WORLD_BIT_STRING + String.valueOf(c),
                 sb.getBitString());
     }
@@ -73,7 +77,7 @@ public class StringOfBitsTest {
         char one =  '1';
         char zero = '0';
         sb.append(zero);
-        sb.append(zero);
+        sb.append(one);
         assertEquals(2, sb.length());
         assertEquals(String.valueOf(zero) + String.valueOf(one),
                 sb.getBitString());
@@ -85,9 +89,9 @@ public class StringOfBitsTest {
         char one =  '1';
         char zero = '0';
         sb.append(zero);
-        sb.append(zero);
-        assertEquals(helloWorldLength + 2, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(zero)
+        sb.append(one);
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 2, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING + String.valueOf(zero)
                 + String.valueOf(one), sb.getBitString());
     }
 
@@ -111,16 +115,18 @@ public class StringOfBitsTest {
     public void stringOfBitsAppendBooleanValueZeroTest() {
         StringOfBits sb = helloWorldStringOfBits();
         sb.append(false);
-        assertEquals(helloWorldLength + 1, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(0), sb.getBitString());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 1, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING + String.valueOf(0),
+                sb.getBitString());
     }
 
     @Test
     public void stringOfBitsAppendBooleanValueOneTest() {
         StringOfBits sb = helloWorldStringOfBits();
         sb.append(true);
-        assertEquals(helloWorldLength + 1, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(1), sb.getBitString());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 1, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING + String.valueOf(1),
+                sb.getBitString());
     }
 
     @Test
@@ -138,8 +144,8 @@ public class StringOfBitsTest {
         StringOfBits sb = helloWorldStringOfBits();
         sb.append(false);
         sb.append(true);
-        assertEquals(helloWorldLength + 2, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(0)
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 2, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING + String.valueOf(0)
                 + String.valueOf(1), sb.getBitString());
     }
 
@@ -163,16 +169,18 @@ public class StringOfBitsTest {
     public void stringOfBitsAppendIntValueZeroTest() {
         StringOfBits sb = helloWorldStringOfBits();
         sb.append(0);
-        assertEquals(helloWorldLength + 1, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(0),sb.getBitString());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 1, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING
+                + String.valueOf(0), sb.getBitString());
     }
 
     @Test
     public void stringOfBitsAppendIntValueValueOneTest() {
         StringOfBits sb = helloWorldStringOfBits();
         sb.append(1);
-        assertEquals(helloWorldLength + 1, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(1), sb.getBitString());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 1, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING
+                + String.valueOf(1), sb.getBitString());
     }
 
     @Test
@@ -190,8 +198,8 @@ public class StringOfBitsTest {
         StringOfBits sb = helloWorldStringOfBits();
         sb.append(0);
         sb.append(1);
-        assertEquals(helloWorldLength + 2, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(0)
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 2, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING + String.valueOf(0)
                 + String.valueOf(1), sb.getBitString());
     }
 
@@ -219,8 +227,9 @@ public class StringOfBitsTest {
         StringOfBits sb = helloWorldStringOfBits();
         CharSequence cs = "0";
         sb.append(cs);
-        assertEquals(helloWorldLength + 1, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(cs), sb.getBitString());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 1, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING + String.valueOf(cs),
+                sb.getBitString());
     }
 
     @Test
@@ -228,8 +237,9 @@ public class StringOfBitsTest {
         StringOfBits sb = helloWorldStringOfBits();
         CharSequence cs = "0";
         sb.append(cs);
-        assertEquals(helloWorldLength + 1, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(cs), sb.getBitString());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 1, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING + String.valueOf(cs),
+                sb.getBitString());
     }
 
     @Test
@@ -237,7 +247,7 @@ public class StringOfBitsTest {
         StringOfBits sb = emptyStringOfBits();
         CharSequence cs = "0";
         sb.append(cs);
-        assertEquals(2, sb.length());
+        assertEquals(1, sb.length());
         assertEquals(String.valueOf(cs), sb.getBitString());
     }
 
@@ -246,26 +256,53 @@ public class StringOfBitsTest {
         StringOfBits sb = helloWorldStringOfBits();
         CharSequence cs = "01";
         sb.append(cs);
-        assertEquals(helloWorldLength + 2, sb.length());
-        assertEquals(HELLO_WORLD + String.valueOf(cs), sb.getBitString());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 2, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING  + String.valueOf(cs),
+                sb.getBitString());
     }
 
     @Test
     public void emptyStringOfBitsAppendStringOfBitsTest() {
         StringOfBits sb = emptyStringOfBits();
-        StringOfBits appendStringOfBits = new StringOfBits("01");
+        StringOfBits appendStringOfBits = new StringOfBits(HELLO);
         sb.append(appendStringOfBits);
-        assertEquals(appendStringOfBits.length(), sb.length());
-        assertEquals("01", sb.getBitString());
+        assertEquals(HELLO_BIT_STRING_LENGTH, sb.length());
+        assertEquals(HELLO_BIT_STRING,
+                sb.getBitString());
     }
 
     @Test
     public void stringOfBitsAppendStringOfBitsTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        StringOfBits appendHelloWorldStringOfBits = new StringOfBits("01");
+        StringOfBits appendHelloWorldStringOfBits = new StringOfBits(HELLO);
         sb.append(appendHelloWorldStringOfBits);
-        assertEquals(helloWorldLength + sb.length(), sb.length());
-        assertEquals(HELLO_WORLD + "01", sb.getBitString());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + HELLO_BIT_STRING_LENGTH,
+                sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING + HELLO_BIT_STRING,
+                sb.getBitString());
+    }
+
+    @Test
+    public void emptyStringOfBitsMultipleAppendStringOfBitsTest() {
+        StringOfBits sb = emptyStringOfBits();
+        StringOfBits appendStringOfBits = new StringOfBits(HELLO);
+        sb.append(appendStringOfBits);
+        sb.append(appendStringOfBits);
+        assertEquals(HELLO_BIT_STRING_LENGTH * 2, sb.length());
+        assertEquals(HELLO_BIT_STRING + HELLO_BIT_STRING,
+                sb.getBitString());
+    }
+
+    @Test
+    public void stringOfBitsMultipleAppendStringOfBitsTest() {
+        StringOfBits sb = helloWorldStringOfBits();
+        StringOfBits appendHelloWorldStringOfBits = new StringOfBits(HELLO);
+        sb.append(appendHelloWorldStringOfBits);
+        sb.append(appendHelloWorldStringOfBits);
+        assertEquals((HELLO_WORLD_BIT_STRING_LENGTH + HELLO_BIT_STRING_LENGTH
+                * 2), sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING + HELLO_BIT_STRING
+                + HELLO_BIT_STRING, sb.getBitString());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -277,9 +314,9 @@ public class StringOfBitsTest {
     @Test
     public void testCharAtTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals('1', sb.charAt(0));
-        assertEquals('0', sb.charAt(1));
-        assertEquals('0', sb.charAt(10));
+        assertEquals('0', sb.charAt(0));
+        assertEquals('1', sb.charAt(1));
+        assertEquals('1', sb.charAt(10));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -291,9 +328,9 @@ public class StringOfBitsTest {
     @Test
     public void testIntAtTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals(1, sb.intAt(0));
-        assertEquals(0, sb.intAt(1));
-        assertEquals(0, sb.intAt(10));
+        assertEquals(0, sb.intAt(0));
+        assertEquals(1, sb.intAt(1));
+        assertEquals(1, sb.intAt(10));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -305,9 +342,9 @@ public class StringOfBitsTest {
     @Test
     public void testooleanAtTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertTrue(sb.booleanAt(0));
-        assertFalse(sb.booleanAt(1));
-        assertFalse(sb.booleanAt(10));
+        assertFalse(sb.booleanAt(0));
+        assertTrue(sb.booleanAt(1));
+        assertTrue(sb.booleanAt(10));
     }
 
     @Test
@@ -324,25 +361,34 @@ public class StringOfBitsTest {
         StringOfBits sb = emptyStringOfBits();
         assertEquals(0, sb.length());
         sb.setBitAt(10, '1');
-        assertEquals(10, sb.length());
         assertEquals('1', sb.charAt(10));
+        assertEquals(11, sb.length());
     }
 
     @Test
     public void setFirstBitStringOfBitsCharTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals(helloWorldLength, sb.length());
-        sb.setBitAt(0, '0');
-        assertEquals(helloWorldLength, sb.length());
-        assertEquals('0', sb.charAt(0));
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
+        sb.setBitAt(0, '1');
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
+        assertEquals('1', sb.charAt(0));
     }
 
     @Test
     public void setArbitraryStringOfBitsBitCharTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
+        sb.setBitAt(90, '1');
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 3, sb.length());
+        assertEquals('1', sb.charAt(10));
+    }
+
+    @Test
+    public void setIndexGreaterThanStringOfBitsCharTest() {
+        StringOfBits sb = helloWorldStringOfBits();
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         sb.setBitAt(10, '1');
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         assertEquals('1', sb.charAt(10));
     }
 
@@ -360,26 +406,35 @@ public class StringOfBitsTest {
         StringOfBits sb = emptyStringOfBits();
         assertEquals(0, sb.length());
         sb.setBitAt(10, 1);
-        assertEquals(10, sb.length());
+        assertEquals(11, sb.length());
         assertEquals(1, sb.intAt(10));
     }
 
     @Test
     public void setFirstBitStringOfBitsIntTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         sb.setBitAt(0, 0);
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         assertEquals(0, sb.intAt(0));
     }
 
     @Test
     public void setArbitraryStringOfBitsBitIntTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         sb.setBitAt(10, 1);
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         assertEquals(1, sb.intAt(10));
+    }
+
+    @Test
+    public void setLargerIndexStringOfBitsBitCharTest() {
+        StringOfBits sb = helloWorldStringOfBits();
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
+        sb.setBitAt(90, 1);
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH + 3, sb.length());
+        assertEquals('1', sb.charAt(10));
     }
 
     @Test
@@ -396,25 +451,25 @@ public class StringOfBitsTest {
         StringOfBits sb = emptyStringOfBits();
         assertEquals(0, sb.length());
         sb.setBitAt(10, true);
-        assertEquals(10, sb.length());
+        assertEquals(11, sb.length());
         assertTrue(sb.booleanAt(10));
     }
 
     @Test
     public void setFirstBitStringOfBitsBooleanOneTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         sb.setBitAt(2, true);
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         assertTrue(sb.booleanAt(2));
     }
 
     @Test
     public void setArbitraryStringOfBitsBitBooleanOneTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         sb.setBitAt(10, true);
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         assertTrue(sb.booleanAt(10));
     }
 
@@ -432,25 +487,25 @@ public class StringOfBitsTest {
         StringOfBits sb = emptyStringOfBits();
         assertEquals(0, sb.length());
         sb.setBitAt(10, false);
-        assertEquals(10, sb.length());
+        assertEquals(11, sb.length());
         assertFalse(sb.booleanAt(10));
     }
 
     @Test
     public void setFirstBitStringOfBitsBooleanOZeroTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         sb.setBitAt(0, false);
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         assertFalse(sb.booleanAt(0));
     }
 
     @Test
     public void setArbitraryStringOfBitsBitBooleanZeroTest() {
         StringOfBits sb = helloWorldStringOfBits();
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         sb.setBitAt(9, false);
-        assertEquals(helloWorldLength, sb.length());
+        assertEquals(HELLO_WORLD_BIT_STRING_LENGTH, sb.length());
         assertFalse(sb.booleanAt(9));
     }
 

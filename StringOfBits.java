@@ -1,15 +1,22 @@
+import java.util.Arrays;
+
+/**
+ * A class that can take a given string and represent it as a string of bit
+ * values (0 or 1).
+ * @author  Kendra Lamb
+ */
 public class StringOfBits {
     /**
-     * BinaryString convered from a CharSequence.
+     * BinaryString converted from a CharSequence.
      */
-    private String binaryString;
+    private String bitString;
 
     /**
      * Constructs the empty bit string.
      * length() == 0
      */
     public StringOfBits() {
-
+        this.bitString = "";
     }
 
     /**
@@ -19,7 +26,15 @@ public class StringOfBits {
      *                     into a string of bits
      */
     public StringOfBits(final CharSequence charSequence) {
-
+        String charString = charSequence.toString();
+        byte[] bytes = charString.getBytes();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (byte b : bytes) {
+            String stringToAppend = String.format("%8s",
+                    Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
+            stringBuilder.append(stringToAppend);
+        }
+        bitString = stringBuilder.toString();
     }
 
     /**Copy constructor.
@@ -27,7 +42,7 @@ public class StringOfBits {
      * @param  stringOfBits bitString to be cloned
      */
     public StringOfBits(final StringOfBits stringOfBits) {
-
+        this.bitString = stringOfBits.getBitString().trim();
     }
 
     /** Returns the bitString convered in
@@ -36,7 +51,7 @@ public class StringOfBits {
      * @return String
      */
     public String getBitString() {
-        return binaryString;
+        return bitString;
     }
 
     /**
@@ -44,7 +59,7 @@ public class StringOfBits {
      * @return int
      */
     public int length() {
-        return 0;
+        return bitString.length();
     }
 
     /**Appends the bit string representation of
@@ -55,7 +70,10 @@ public class StringOfBits {
      * @return StringOfBits
      */
     public StringOfBits append(final char c) {
-        return new StringOfBits();
+        if (c == '0' || c == '1') {
+            bitString = bitString + c;
+        }
+        return new StringOfBits(bitString);
     }
 
     /**
@@ -66,7 +84,12 @@ public class StringOfBits {
      * @return StringOfBits
      */
     public StringOfBits append(final boolean b) {
-        return new StringOfBits();
+        if (b) {
+            bitString = bitString + "1";
+        } else {
+            bitString = bitString + "0";
+        }
+        return new StringOfBits(bitString);
     }
 
     /**
@@ -79,7 +102,10 @@ public class StringOfBits {
      * @return StringOfBits
      */
     public StringOfBits append(final int i) {
-        return new StringOfBits();
+        if (i == 0 || i == 1) {
+            bitString = bitString + String.valueOf(i);
+        }
+        return new StringOfBits(bitString);
     }
 
     /**
@@ -93,7 +119,14 @@ public class StringOfBits {
      * @return The appended StringOfBits
      */
     public StringOfBits append(final CharSequence str) {
-        return new StringOfBits();
+       int strLength = str.length();
+        for (int i = 0; i < strLength; i++) {
+            char c = str.charAt(i);
+            if (c == '0' || c == '1') {
+                bitString = bitString + c;
+            }
+        }
+        return new StringOfBits(bitString);
     }
 
     /**
@@ -102,7 +135,8 @@ public class StringOfBits {
      * @return StringOfBits
      */
     public StringOfBits append(final StringOfBits bitstr) {
-        return new StringOfBits();
+        bitString = bitString + bitstr.getBitString();
+        return new StringOfBits(bitString);
     }
 
     /**
@@ -112,10 +146,12 @@ public class StringOfBits {
      * @return char
      * @throws IndexOutOfBoundsException
      */
-    public char charAt(final int index)
-            throws IndexOutOfBoundsException {
-        char c = '0';
-        return c;
+    public char charAt(final int index) throws IndexOutOfBoundsException {
+        if (index > bitString.length()) {
+            throw new IndexOutOfBoundsException("That index is out of bounds "
+                    + "of the bit string.");
+        }
+        return bitString.charAt(index);
     }
 
     /**
@@ -126,9 +162,13 @@ public class StringOfBits {
      * @throws IndexOutOfBoundsException
      */
 
-    public int intAt(final int index)
-            throws IndexOutOfBoundsException {
-        return 0;
+    public int intAt(final int index) throws IndexOutOfBoundsException {
+        if (index > bitString.length()) {
+            throw new IndexOutOfBoundsException("That index is out of bounds "
+                    + "of the bit string.");
+        }
+        String valueAtIndex = String.valueOf(bitString.charAt(index));
+        return Integer.valueOf(valueAtIndex);
     }
 
     /**
@@ -139,9 +179,13 @@ public class StringOfBits {
      * @return boolean
      * @throws IndexOutOfBoundsException
      */
-    public boolean booleanAt(final int index)
-            throws IndexOutOfBoundsException {
-        return false;
+    public boolean booleanAt(final int index) throws IndexOutOfBoundsException {
+        if (index > bitString.length()) {
+            throw new IndexOutOfBoundsException("That index is out of bounds"
+                    + "of the bit string ");
+        }
+        char charAtIndex = bitString.charAt(index);
+        return charAtIndex != '0';
     }
 
     /**
@@ -152,7 +196,16 @@ public class StringOfBits {
      * @param c char to set bit at index
      */
     public void setBitAt(final int index, final char c) {
-
+        if (c == '0' || c == '1') {
+            if (bitString.isEmpty()) {
+                createLongerBitStringFromEmptyString(index);
+            } else if (index > bitString.length() - 1) {
+                createLongerBitString(index);
+            }
+            StringBuffer stringBuff = new StringBuffer(bitString);
+            stringBuff.setCharAt(index, c);
+            bitString = stringBuff.toString();
+        }
     }
 
     /**
@@ -163,7 +216,17 @@ public class StringOfBits {
      * @param i int to set at bit index
      */
     public void setBitAt(final int index, final int i) {
+        if (i == 0 || i == 1) {
+            if (bitString.isEmpty()) {
+                createLongerBitStringFromEmptyString(index);
+            } else if (index > bitString.length() - 1) {
+                createLongerBitString(index);
+            }
+            StringBuffer stringBuff = new StringBuffer(bitString);
+            stringBuff.setCharAt(index, (char) (i + '0'));
+            bitString = stringBuff.toString();
 
+        }
     }
 
     /**
@@ -175,15 +238,51 @@ public class StringOfBits {
      */
 
     public void setBitAt(final int index, final boolean b) {
+        if (bitString.isEmpty()) {
+            createLongerBitStringFromEmptyString(index);
+        } else if (index > bitString.length() - 1) {
+            createLongerBitString(index);
+        }
 
+        char charToSet = b ? '1' : '0';
+        StringBuffer stringBuff = new StringBuffer(bitString);
+        stringBuff.setCharAt(index, charToSet);
+        bitString = stringBuff.toString();
     }
 
     /**
-     * Overrides Object toString()
+     * Overrides Object toString().
      * @return String representation of bitString
      */
     @Override
     public String toString() {
-        return "";
+       StringBuilder sb = new StringBuilder();
+        Arrays.stream(
+                bitString.split("(?<=\\G.{8})"))
+                .forEach(s -> sb.append((char) Integer.parseInt(s, 2)));
+        return sb.toString();
     }
+
+    /**
+     * Creates a string long enough to set the bit at a specified index.
+     * @param index index of where the bit will be set
+     */
+    private void createLongerBitString(final int index) {
+        int bitStringLength = bitString.length() - 1;
+        int amtOfBitsToAdd = index - bitStringLength;
+        for (int i = 0; i < amtOfBitsToAdd; i++) {
+            bitString = bitString + "0";
+        }
+    }
+    /**
+     * Creates a string long enough to set the bit at a specified index from
+     * an empty string.
+     * @param index index of where the bit will be set
+     */
+    private void createLongerBitStringFromEmptyString(final int index) {
+        for (int i = 0; i <= index; i++) {
+            bitString = bitString + "0";
+        }
+    }
+
 }
