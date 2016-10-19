@@ -1,3 +1,8 @@
+/**
+ * The collected values stored at a HuffmanTree node which include:
+ * Character symbol, Double frequency, and StringOfBits code.
+ * @author Kendra Lamb
+ */
 public class HuffmanTreeNodeValues {
 
     /** Symbol for Node.*/
@@ -7,7 +12,7 @@ public class HuffmanTreeNodeValues {
     /**Code for Node Symbol.*/
     private StringOfBits code;
     /**
-     * Constructor that sets all values to null
+     * Constructor that sets all values to null.
      */
     public HuffmanTreeNodeValues() {
         this.symbol = null;
@@ -16,7 +21,7 @@ public class HuffmanTreeNodeValues {
     }
 
     /**
-     * Constructor that sets all values
+     * Constructor that sets all values.
      * @param symbol Character symbol
      * @param frequency Frequency of symbol
      * @param code the code for the symbol
