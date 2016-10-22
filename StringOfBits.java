@@ -1,4 +1,4 @@
-import java.util.Arrays;
+
 
 /**
  * A class that can take a given string and represent it as a string of bit
@@ -9,14 +9,13 @@ public class StringOfBits {
     /**
      * BinaryString converted from a CharSequence.
      */
-    private String bitString;
+    private String bitString = "";
 
     /**
      * Constructs the empty bit string.
      * length() == 0
      */
     public StringOfBits() {
-        this.bitString = "";
     }
 
     /**
@@ -34,7 +33,7 @@ public class StringOfBits {
                     Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
             stringBuilder.append(stringToAppend);
         }
-        bitString = stringBuilder.toString();
+        this.bitString = stringBuilder.toString();
     }
 
     /**Copy constructor.
@@ -202,9 +201,9 @@ public class StringOfBits {
             } else if (index > bitString.length() - 1) {
                 createLongerBitString(index);
             }
-            StringBuffer stringBuff = new StringBuffer(bitString);
-            stringBuff.setCharAt(index, c);
-            bitString = stringBuff.toString();
+            StringBuilder stringBuild = new StringBuilder(bitString);
+            stringBuild.setCharAt(index, c);
+            bitString = stringBuild.toString();
         }
     }
 
@@ -222,9 +221,9 @@ public class StringOfBits {
             } else if (index > bitString.length() - 1) {
                 createLongerBitString(index);
             }
-            StringBuffer stringBuff = new StringBuffer(bitString);
-            stringBuff.setCharAt(index, (char) (i + '0'));
-            bitString = stringBuff.toString();
+            StringBuilder stringBuild = new StringBuilder(bitString);
+            stringBuild.setCharAt(index, (char) (i + '0'));
+            bitString = stringBuild.toString();
 
         }
     }
@@ -245,9 +244,9 @@ public class StringOfBits {
         }
 
         char charToSet = b ? '1' : '0';
-        StringBuffer stringBuff = new StringBuffer(bitString);
-        stringBuff.setCharAt(index, charToSet);
-        bitString = stringBuff.toString();
+        StringBuilder stringBuild = new StringBuilder(bitString);
+        stringBuild.setCharAt(index, charToSet);
+        bitString = stringBuild.toString();
     }
 
     /**
@@ -256,11 +255,7 @@ public class StringOfBits {
      */
     @Override
     public String toString() {
-       StringBuilder sb = new StringBuilder();
-        Arrays.stream(
-                bitString.split("(?<=\\G.{8})"))
-                .forEach(s -> sb.append((char) Integer.parseInt(s, 2)));
-        return sb.toString();
+        return bitString;
     }
 
     /**

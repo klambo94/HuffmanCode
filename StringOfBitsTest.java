@@ -3,7 +3,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 
 /**
@@ -47,7 +46,7 @@ public class StringOfBitsTest {
     @Test
     public void cloneConstructorTest() {
         StringOfBits clone = new StringOfBits(helloWorldStringOfBits());
-        assertSame(clone, helloWorldStringOfBits());
+        assertEquals(clone.toString(), helloWorldStringOfBits().toString());
     }
 
     @Test

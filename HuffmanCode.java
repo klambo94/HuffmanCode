@@ -2,11 +2,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HuffmanCode {
-    /** Seed String to create code for*/
+    /** Seed String to create code for.*/
     private String seed;
-    /** HashMap to hold character frequencies*/
+    /** HashMap to hold character frequencies.*/
     private HashMap<Character, Double> table;
-    /** Map to hold character codes */
+    /** Map to hold character codes. */
     private Map<Character, StringOfBits> hmap;
 
     /**
@@ -14,9 +14,12 @@ public class HuffmanCode {
      * a given seed string.
      * @param seed the string from which
      *             the code is generated
-
      */
-    //TODO:Talk about this constructor in class for implementation
+
+    //This is the message body that will contain the statistics of the
+    // messages you will send. Ex. if we were to send twitter messages the
+    // seed would be a concatenation of all the twitter messages that would
+    // hold the common used languages and characters.
     public HuffmanCode(final String seed) {
 
     }

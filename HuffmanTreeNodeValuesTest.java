@@ -15,7 +15,7 @@ public class HuffmanTreeNodeValuesTest {
     /**
      * Generic empty Node for Testing
      * @return HuffmanTreeNodeValues
-     * 		   A node with null values
+     * A node with null values
      */
     private HuffmanTreeNodeValues emptyHuffmanTreeNode() {
         return new HuffmanTreeNodeValues();
@@ -25,7 +25,7 @@ public class HuffmanTreeNodeValuesTest {
      * Node for testing that holds Character A,
      * it's frequency, and the code for that character.
      * @return HuffmanTreeNodeValues A node with
-     * 			Character A, Frequency of 2, code of 101
+     *      Character A, Frequency of 2, code of 101
      */
     private HuffmanTreeNodeValues huffmanTreeNode() {
         return new HuffmanTreeNodeValues('A', 2.0, A_CODE);

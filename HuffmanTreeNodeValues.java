@@ -22,15 +22,15 @@ public class HuffmanTreeNodeValues {
 
     /**
      * Constructor that sets all values.
-     * @param symbol Character symbol
-     * @param frequency Frequency of symbol
+     * @param sym Character symbol
+     * @param freq Frequency of symbol
      * @param code the code for the symbol
      */
-    public HuffmanTreeNodeValues(final Character symbol,
-                                 final Double frequency,
+    public HuffmanTreeNodeValues(final Character sym,
+                                 final Double freq,
                                  final StringOfBits code) {
-        this.symbol = symbol;
-        this.frequency = frequency;
+        this.symbol = sym;
+        this.frequency = freq;
         this.code = code;
     }
 
