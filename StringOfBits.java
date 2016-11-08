@@ -25,15 +25,7 @@ public class StringOfBits {
      *                     into a string of bits
      */
     public StringOfBits(final CharSequence charSequence) {
-        String charString = charSequence.toString();
-        byte[] bytes = charString.getBytes();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (byte b : bytes) {
-            String stringToAppend = String.format("%8s",
-                    Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
-            stringBuilder.append(stringToAppend);
-        }
-        this.bitString = stringBuilder.toString();
+        this.bitString = charSequence.toString();
     }
 
     /**Copy constructor.
@@ -41,7 +33,7 @@ public class StringOfBits {
      * @param  stringOfBits bitString to be cloned
      */
     public StringOfBits(final StringOfBits stringOfBits) {
-        this.bitString = stringOfBits.getBitString().trim();
+        this.bitString = stringOfBits.getBitString();
     }
 
     /** Returns the bitString convered in

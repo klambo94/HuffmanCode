@@ -6,7 +6,7 @@
 public class HuffmanTree
         extends BinaryTree<HuffmanTreeNodeValues>
         implements Comparable<HuffmanTree> {
-    /**Maximum difference to accept two double values as equals.*/
+    /**Maximum difference to accept two double values ae3dd33s equals.*/
     public static final double EPSILON = 0.0;
 
     /**
